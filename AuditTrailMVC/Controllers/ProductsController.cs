@@ -3,6 +3,7 @@ using AuditTrailMVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace AuditTrailMVC.Controllers
 {
@@ -53,10 +54,17 @@ namespace AuditTrailMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Rate")] Product product)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(product);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //return View(product);
             if (ModelState.IsValid)
             {
                 _context.Add(product);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(User?.FindFirst(ClaimTypes.NameIdentifier).Value);
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -89,13 +97,15 @@ namespace AuditTrailMVC.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    //        _context.Update(product);
+                    //        await _context.SaveChangesAsync();
+                    var oldProduct = await _context.Product.FindAsync(id);
+                    _context.Entry(oldProduct).CurrentValues.SetValues(product);
+                    await _context.SaveChangesAsync(User?.FindFirst(ClaimTypes.NameIdentifier).Value);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -111,6 +121,7 @@ namespace AuditTrailMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
+
         }
 
         // GET: Products/Delete/5
@@ -140,9 +151,10 @@ namespace AuditTrailMVC.Controllers
             if (product != null)
             {
                 _context.Product.Remove(product);
+                await _context.SaveChangesAsync(User?.FindFirst(ClaimTypes.NameIdentifier).Value);
             }
 
-            await _context.SaveChangesAsync();
+            // await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
