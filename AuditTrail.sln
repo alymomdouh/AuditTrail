@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditTrail.webApi", "AuditTrail.webApi\AuditTrail.webApi.csproj", "{F6D5E7C2-A837-44A7-976A-97C0AE34DC1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6D5E7C2-A837-44A7-976A-97C0AE34DC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6D5E7C2-A837-44A7-976A-97C0AE34DC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6D5E7C2-A837-44A7-976A-97C0AE34DC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6D5E7C2-A837-44A7-976A-97C0AE34DC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {577C2022-24A2-486C-B0DF-793828D17418}
+	EndGlobalSection
+EndGlobal
