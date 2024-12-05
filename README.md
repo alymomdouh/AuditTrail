@@ -2,3 +2,7 @@
 
 
 [How to Implement Audit Trail in ASP.NET Core Web API](https://code-maze.com/aspnetcore-audit-trail/)
+
+[Implementing a Audit Trail in ASP.NET Core Web API](https://www.c-sharpcorner.com/article/implementing-a-audit-trail-in-asp-net-core-web-api/)
+
+
