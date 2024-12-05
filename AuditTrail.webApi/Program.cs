@@ -1,3 +1,5 @@
+﻿using AuditTrail.webApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuditTrail.webApi
 {
@@ -6,6 +8,8 @@ namespace AuditTrail.webApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<AuditTrailwebApiContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("AuditTrailwebApiContext") ?? throw new InvalidOperationException("Connection string 'AuditTrailwebApiContext' not found.")));
 
             // Add services to the container.
 
@@ -25,8 +29,22 @@ namespace AuditTrail.webApi
 
             app.UseHttpsRedirection();
 
+            // code removed for brevity
             app.UseAuthorization();
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
 
+
+
+            // app.UseMiddleware<AuditLogMiddleware>();
+            // third way to save audit log
+            app.UseWhen(context => context.Request.Path.StartsWithSegments("/api"), appBuilder =>
+            {
+                appBuilder.UseMiddleware<AuditLogMiddleware>();
+            });
 
             app.MapControllers();
 
